@@ -6,4 +6,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="Noticias">Noticias</string>
+    <string name="DOTA">DOTA</string>
+    <string name="leagueoflegende">League of Legends</string>
+    <string name="CS">Counter Strike</string>
+    <string name="Juegos">Juegos</string>
+    <string name="favoritor">Favoritos</string>
+    <string name="configuracion">Configuración</string>
+    <string name="secondmenu">Area Personal</string>
 </resources>
