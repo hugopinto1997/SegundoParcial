@@ -1,9 +1,13 @@
 package com.hugopinto.segundoparcial.Activities;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,12 +22,15 @@ import android.view.MenuItem;
 
 import com.hugopinto.segundoparcial.Adapters.GameAdapter;
 import com.hugopinto.segundoparcial.Classes.Game;
+import com.hugopinto.segundoparcial.Fragments.GSCOFragment;
+import com.hugopinto.segundoparcial.Fragments.NewsFragment;
 import com.hugopinto.segundoparcial.R;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        GSCOFragment.OnFragmentInteractionListener, NewsFragment.OnFragmentInteractionListener{
 
     RecyclerView rv;
     GameAdapter adapter;
@@ -36,6 +43,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenido,new NewsFragment()).commit();
+        getSupportActionBar().setTitle("Game News UCA");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -56,43 +65,11 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
-        rv=findViewById(R.id.recycler);
-
-
-        series= new ArrayList<>();
-
-        gManager= new GridLayoutManager(this,2);
-        gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {
-                if (position%3==0){
-                    return 2;
-                }else {
-                    return 1;
-                }
-            }
-        });
-        rv.setLayoutManager(gManager);
-        prepareSeries();
-
-        adapter=new GameAdapter(series);
-        rv.setAdapter(adapter);
 
 
 
     }
-    public void prepareSeries(){
-        series = new ArrayList<>();
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
 
-
-
-    }
 
     @Override
     public void onBackPressed() {
@@ -131,24 +108,52 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        boolean FragmentSeleccionado = false;
+        Fragment miFragment=null;
+        boolean ActSeleccionada =false;
+        Activity miActivity = null;
 
         if (id == R.id.nav_news) {
             // Handle the camera action
+            miFragment = new NewsFragment();
+            FragmentSeleccionado = true;
+            getSupportActionBar().setTitle("Noticias");
+
         } else if (id == R.id.nav_CSGO) {
+            miFragment = new GSCOFragment();
+            FragmentSeleccionado = true;
+            getSupportActionBar().setTitle("Counter Strike: GO");
 
         }  else if (id == R.id.nav_LOL) {
+            miFragment = new GSCOFragment();
+            FragmentSeleccionado = true;
+            getSupportActionBar().setTitle("League of Legends");
 
         } else if (id == R.id.nav_DOTA) {
+            miFragment = new GSCOFragment();
+            FragmentSeleccionado = true;
+            getSupportActionBar().setTitle("DOTA");
 
         }
         else if (id == R.id.nav_favoritos) {
+            miActivity = new Login();
+            Intent intent = new Intent(getApplicationContext(), Login.class);
+            startActivity(intent);
 
         }else if (id == R.id.nav_configuracion) {
 
+        }
+        if(FragmentSeleccionado){
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenido,miFragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
     }
 }
