@@ -5,25 +5,36 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
+            android:id="@+id/nav_news"
             android:icon="@drawable/ic_news"
             android:title="@string/Noticias">
         </item>
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_gamepad"
-            android:title="@string/Juegos" />
-
     </group>
+    <item android:title="@string/Juegos">
+        <menu>
+            <item
+                android:id="@+id/nav_CSGO"
+                android:icon="@drawable/ic_gamepad"
+                android:title="@string/COUNTERSTRIKE" />
+            <item
+                android:id="@+id/nav_LOL"
+                android:icon="@drawable/ic_gamepad"
+                android:title="@string/LeagueofLegends" />
+            <item
+                android:id="@+id/nav_DOTA"
+                android:icon="@drawable/ic_gamepad"
+                android:title="@string/JDota" />
+        </menu>
+    </item>
 
     <item android:title="@string/secondmenu">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/nav_favoritos"
                 android:icon="@drawable/ic_star_black_24dp"
                 android:title="@string/favoritor" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/nav_configuracion"
                 android:icon="@drawable/ic_settings"
                 android:title="@string/configuracion" />
         </menu>

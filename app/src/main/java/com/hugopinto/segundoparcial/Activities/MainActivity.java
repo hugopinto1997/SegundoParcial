@@ -1,8 +1,11 @@
 package com.hugopinto.segundoparcial.Activities;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,10 +16,19 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.hugopinto.segundoparcial.Adapters.GameAdapter;
+import com.hugopinto.segundoparcial.Classes.Game;
 import com.hugopinto.segundoparcial.R;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    RecyclerView rv;
+    GameAdapter adapter;
+    ArrayList<Game> series;
+    GridLayoutManager gManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +54,44 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        rv=findViewById(R.id.recycler);
+
+
+        series= new ArrayList<>();
+
+        gManager= new GridLayoutManager(this,2);
+        gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position%3==0){
+                    return 2;
+                }else {
+                    return 1;
+                }
+            }
+        });
+        rv.setLayoutManager(gManager);
+        prepareSeries();
+
+        adapter=new GameAdapter(series);
+        rv.setAdapter(adapter);
+
+
+
+    }
+    public void prepareSeries(){
+        series = new ArrayList<>();
+        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
+        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
+        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
+        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
+        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
+        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
+
+
+
     }
 
     @Override
@@ -82,13 +132,18 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_news) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_CSGO) {
 
-        }  else if (id == R.id.nav_share) {
+        }  else if (id == R.id.nav_LOL) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_DOTA) {
+
+        }
+        else if (id == R.id.nav_favoritos) {
+
+        }else if (id == R.id.nav_configuracion) {
 
         }
 
