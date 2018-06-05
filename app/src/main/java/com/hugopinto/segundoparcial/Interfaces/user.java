@@ -3,18 +3,85 @@ package com.hugopinto.segundoparcial.Interfaces;
 import android.view.ViewDebug;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+import com.hugopinto.segundoparcial.Classes.Game;
+
+import java.util.List;
 
 public class user {
 
-    @Expose
-    private int id;
-    private String name;
+    private String usuario;
+    private String pass;
+    private String token;
 
-    public user(){}
-
-    public user(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public user(String usuario, String pass){
+        this.usuario=usuario;
+        this.pass=pass;
     }
 
+   @SerializedName("_id")
+    private String id;
+   @SerializedName("__v")
+    private int version;
+   @SerializedName("favoriteNews")
+    private List<Game> favoriteNews;
+   @SerializedName("created_date")
+    private String date;
+
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public List<Game> getFavoriteNews() {
+        return favoriteNews;
+    }
+
+    public void setFavoriteNews(List<Game> favoriteNews) {
+        this.favoriteNews = favoriteNews;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }
