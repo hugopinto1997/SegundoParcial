@@ -1,6 +1,8 @@
 package com.hugopinto.segundoparcial.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.gsm.GsmCellLocation;
@@ -29,8 +31,11 @@ import java.net.SocketTimeoutException;
 
 public class Login extends AppCompatActivity {
 
-    EditText name, pass;
-    Button btn;
+    private EditText name, pass;
+    private Button btn;
+    private String tok, names, passw;
+
+    private SharedPreferences preferencies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,9 @@ public class Login extends AppCompatActivity {
         pass = findViewById(R.id.password);
         btn = findViewById(R.id.email_sign_in_button);
 
+
+        preferencies = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+
        btn.setOnClickListener(new View.OnClickListener(){
            @Override
            public void onClick(View v){
@@ -49,22 +57,36 @@ public class Login extends AppCompatActivity {
                    Toast.makeText(getApplicationContext(),"Complete los campos", Toast.LENGTH_SHORT).show();
                }else{
                    iniciosesion();
+                   names=name.getText().toString();
+                   passw = pass.getText().toString();
+                   SaveSharedPrefs(names,passw,tok);
                }
            }
        });
     }
+
+    public void SaveSharedPrefs(String usuario, String password, String tok){
+            SharedPreferences.Editor editor= preferencies.edit();
+            editor.putString("usuario", usuario);
+            editor.putString("password", password);
+            editor.putString("Token",tok);
+            editor.apply();
+    }
+
     public void iniciosesion(){
         Gson gson = new GsonBuilder().registerTypeAdapter(String.class,new DecryptToken()).create();
         Retrofit.Builder builder = new Retrofit.Builder().baseUrl(GameNewsAPI.ENDPOINT).addConverterFactory(GsonConverterFactory.create(gson));
         Retrofit retrofit= builder.build();
         GameNewsAPI gameNewsAPI= retrofit.create(GameNewsAPI.class);
-        user usr= new user(name.getText().toString(), pass.getText().toString());
+        final user usr= new user(name.getText().toString(), pass.getText().toString());
         Call<String> c = gameNewsAPI.login(usr.getUsuario(), usr.getPass());
         c.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 if (response.isSuccessful() && !response.body().equals("")){
-                    Toast.makeText(getApplicationContext(), response.body().toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Inició Sesion como: "+usr.getUsuario(), Toast.LENGTH_SHORT).show();
+                    usr.setToken(response.body());
+                    tok=response.body();
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
                     finish();

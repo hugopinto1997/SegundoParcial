@@ -24,9 +24,14 @@
         <activity
             android:name=".Activities.MainActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activities.Login">
+
+        </activity>
+        <activity
+            android:name=".Activities.Settings"
+            android:parentActivityName=".Activities.MainActivity" />
+        <activity android:name=".Activities.SplashScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

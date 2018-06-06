@@ -27,6 +27,7 @@ import com.hugopinto.segundoparcial.Fragments.NewsFragment;
 import com.hugopinto.segundoparcial.R;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -90,6 +91,8 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(getApplicationContext(), Settings.class);
+            startActivity(intent);
             return true;
         }
 
@@ -129,11 +132,12 @@ public class MainActivity extends AppCompatActivity
 
         }
         else if (id == R.id.nav_favoritos) {
-            miActivity = new Login();
-            Intent intent = new Intent(getApplicationContext(), Login.class);
-            startActivity(intent);
+
 
         }else if (id == R.id.nav_configuracion) {
+            miActivity = new Settings();
+            Intent intent = new Intent(getApplicationContext(), Settings.class);
+            startActivity(intent);
 
         }
         if(FragmentSeleccionado){
