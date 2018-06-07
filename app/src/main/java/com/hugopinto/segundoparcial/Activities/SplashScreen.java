@@ -32,10 +32,13 @@ public class SplashScreen extends AppCompatActivity {
         if(TextUtils.isEmpty(pref.getString("usuario","")) &&
                 TextUtils.isEmpty(pref.getString("password",""))
         && TextUtils.isEmpty(pref.getString("Token",""))){
+            loginredirect.setFlags(loginredirect.FLAG_ACTIVITY_NEW_TASK | loginredirect.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(loginredirect);
         }else {
+            mainredirect.setFlags(mainredirect.FLAG_ACTIVITY_NEW_TASK | mainredirect.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(mainredirect);
         }
+
 
 
     }

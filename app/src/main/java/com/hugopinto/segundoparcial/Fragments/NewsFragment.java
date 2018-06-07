@@ -1,6 +1,7 @@
 package com.hugopinto.segundoparcial.Fragments;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.hugopinto.segundoparcial.APIs.GameNewsAPI;
+import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.Adapters.GameAdapter;
 import com.hugopinto.segundoparcial.Classes.Game;
 import com.hugopinto.segundoparcial.R;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +43,10 @@ public class NewsFragment extends Fragment {
     GameAdapter adapter;
     ArrayList<Game> series;
     GridLayoutManager gManager;
+    Context contexto;
+
+    public ArrayList<News> noticiasExtraidas;
+    public String token;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -57,8 +74,8 @@ public class NewsFragment extends Fragment {
     public static NewsFragment newInstance(String param1, String param2) {
         NewsFragment fragment = new NewsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putString(ARG_PARAM1,param1);
+        args.putString(ARG_PARAM1,param1);
         fragment.setArguments(args);
         return fragment;
     }
@@ -69,7 +86,6 @@ public class NewsFragment extends Fragment {
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-
         }
     }
 
@@ -78,14 +94,13 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View view = inflater.inflate(R.layout.fragment_news, container, false);
+        final View view = inflater.inflate(R.layout.fragment_news, container, false);
 
-
+        final SharedPreferences sh = getContext().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+        token = sh.getString("Token", "");
         rv=view.findViewById(R.id.recycler);
-
-
-        series= new ArrayList<>();
-
+        contexto = view.getContext();
+        noticiasExtraidas= new ArrayList<News>();
         gManager= new GridLayoutManager(view.getContext(),2);
         gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override
@@ -98,10 +113,30 @@ public class NewsFragment extends Fragment {
             }
         });
         rv.setLayoutManager(gManager);
-        prepareSeries();
 
-        adapter=new GameAdapter(series);
-        rv.setAdapter(adapter);
+        Retrofit retrofit = new Retrofit.Builder().baseUrl(GameNewsAPI.ENDPOINT).addConverterFactory(GsonConverterFactory.create(new Gson())).build();
+        GameNewsAPI gameNewsAPI = retrofit.create(GameNewsAPI.class);
+        Call<ArrayList<News>> news = gameNewsAPI.getNews("Beared " + sh.getString("Token",""));
+        news.enqueue(new Callback<ArrayList<News>>() {
+            @Override
+            public void onResponse(Call<ArrayList<News>> call, Response<ArrayList<News>> response) {
+                if(response.isSuccessful()){
+                    noticiasExtraidas = response.body();
+                    adapter=new GameAdapter(noticiasExtraidas, getContext());
+                    rv.setAdapter(adapter);
+                }else {
+                    Toast.makeText(view.getContext(), "",Toast.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<News>> call, Throwable t) {
+
+            }
+        });
+
+
+
 
 
 
@@ -126,7 +161,7 @@ public class NewsFragment extends Fragment {
         }
     }
 
-    public void prepareSeries(){
+    /*public void prepareSeries(){
         series = new ArrayList<>();
         series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
         series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
@@ -137,12 +172,16 @@ public class NewsFragment extends Fragment {
 
 
 
-    }
+    }*/
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    private void cargarnoticias(final Context con, String token){
+
     }
 
     /**

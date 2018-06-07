@@ -1,4 +1,4 @@
-package com.hugopinto.segundoparcial.Classes;
+package com.hugopinto.segundoparcial.APIs;
 
 
 import com.google.gson.*;

@@ -1,4 +1,4 @@
-package com.hugopinto.segundoparcial.Interfaces;
+package com.hugopinto.segundoparcial.APIs;
 
 import android.view.ViewDebug;
 
@@ -17,6 +17,11 @@ public class user {
     public user(String usuario, String pass){
         this.usuario=usuario;
         this.pass=pass;
+    }
+    private  user(String usuario, String pass, String token){
+        this.usuario= usuario;
+        this.pass=pass;
+        this.token=token;
     }
 
    @SerializedName("_id")
