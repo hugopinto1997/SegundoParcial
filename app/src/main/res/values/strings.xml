@@ -201,4 +201,11 @@
         "when a user tries to pick up one of cards.\n\n"
     </string>
     <string name="title_activity_back">back</string>
+    <string name="juegod">Juego:</string>
+    <string name="fecha">Fecha:</string>
+    <string name="Subtitle">Subtitulo</string>
+    <string name="game">Game:</string>
+    <string name="body"><![CDATA[<Body>]]></string>
+    <string name="fechas">DD/MM/YYYY</string>
+    <string name="games">Game Name</string>
 </resources>

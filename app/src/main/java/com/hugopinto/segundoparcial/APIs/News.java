@@ -17,7 +17,7 @@ public class News implements Serializable, Comparable<News> {
     private String description;
     private String body;
     private String game;
-    private Date createdDate;
+    private String createdDate;
 
     public News() {
     }
@@ -78,11 +78,11 @@ public class News implements Serializable, Comparable<News> {
         this.game = game;
     }
 
-    public Date getCreatedDate() {
+    public String getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(String createdDate) {
         this.createdDate = createdDate;
     }
 

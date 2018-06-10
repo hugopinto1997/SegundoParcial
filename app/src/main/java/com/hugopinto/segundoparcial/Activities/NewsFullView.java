@@ -18,7 +18,7 @@ import com.squareup.picasso.Picasso;
 public class NewsFullView extends AppCompatActivity {
 
     ImageView imagenfull;
-    TextView Newsname, newsdesc;
+    TextView Newsname, newsdesc, datenews, bnews, gname;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +26,9 @@ public class NewsFullView extends AppCompatActivity {
 
            imagenfull = findViewById(R.id.imagefullview);
             Newsname = findViewById(R.id.titlenews);
+            gname = findViewById(R.id.gamwnews);
+            bnews = findViewById(R.id.bodynews);
+            datenews = findViewById(R.id.fechanews);
             newsdesc = findViewById(R.id.dnews);
 
         Intent intent = this.getIntent();
@@ -40,6 +43,9 @@ public class NewsFullView extends AppCompatActivity {
         }
         Newsname.setText(rnews.getTitle());
         newsdesc.setText(rnews.getDescription());
+        gname.setText(rnews.getGame());
+        bnews.setText(rnews.getBody());
+        datenews.setText(rnews.getCreate_date());
 
 
     }
