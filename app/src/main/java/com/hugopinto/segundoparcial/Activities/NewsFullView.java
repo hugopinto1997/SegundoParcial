@@ -45,7 +45,7 @@ public class NewsFullView extends AppCompatActivity {
         newsdesc.setText(rnews.getDescription());
         gname.setText(rnews.getGame());
         bnews.setText(rnews.getBody());
-        datenews.setText(rnews.getCreate_date());
+        datenews.setText(rnews.getCreated_date());
 
 
     }

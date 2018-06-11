@@ -28,7 +28,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
 
     private ArrayList<News> news;
     public Context ctx;
-    Context mcontext;
+    public Context context;
 
 
 
@@ -54,9 +54,9 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
         }
 
     }
-    public GameAdapter(ArrayList<News> news, Context contexto) {
+    public GameAdapter(ArrayList<News> news, Context context) {
         this.news = news;
-        mcontext = contexto;
+        this.context = context;
 
     }
 
@@ -82,11 +82,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(mcontext, NewsFullView.class);
+                Intent newIntent = new Intent(context, NewsFullView.class);
                 Bundle caja = new Bundle();
                 caja.putSerializable("key", noticia);
                 newIntent.putExtras(caja);
-                mcontext.startActivity(newIntent);
+                context.startActivity(newIntent);
             }
         });
     }

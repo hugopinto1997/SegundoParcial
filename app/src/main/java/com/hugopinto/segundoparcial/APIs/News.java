@@ -1,33 +1,60 @@
 package com.hugopinto.segundoparcial.APIs;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 
-import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.Date;
 
-public class News implements Serializable, Comparable<News> {
+@Entity(tableName = "Tabla_News")
+public class News implements Serializable {
+    @NonNull
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    private String _id;
 
-    private String id;
+    @ColumnInfo(name = "title")
     private String title;
+
+    @ColumnInfo(name = "coverImage")
     private String coverImage;
-    private String create_date;
+
+    @ColumnInfo(name = "createdDate")
+    private String created_date;
+
+    @ColumnInfo(name = "description")
     private String description;
+
+    @ColumnInfo(name = "body")
     private String body;
+
+    @ColumnInfo(name = "game")
     private String game;
-    private String createdDate;
 
-    public News() {
+    public News(@NonNull String id, String title, String coverImage, String createdDate, String description, String body, String game) {
+        this._id = id;
+        this.title = title;
+        this.coverImage = coverImage;
+        this.created_date = createdDate;
+        this.description = description;
+        this.body = body;
+        this.game = game;
     }
 
+    public News(){
+
+    }
+
+    @NonNull
     public String getId() {
-        return id;
+        return _id;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setId(@NonNull String id) {
+        this._id = id;
     }
 
     public String getTitle() {
@@ -46,12 +73,8 @@ public class News implements Serializable, Comparable<News> {
         this.coverImage = coverImage;
     }
 
-    public String getCreate_date() {
-        return create_date;
-    }
-
-    public void setCreate_date(String create_date) {
-        this.create_date = create_date;
+    public String getCreated_date() {
+        return created_date;
     }
 
     public String getDescription() {
@@ -78,16 +101,12 @@ public class News implements Serializable, Comparable<News> {
         this.game = game;
     }
 
-    public String getCreatedDate() {
-        return createdDate;
+    public void setCreated_date(String created_date) {
+        this.created_date = created_date;
     }
 
-    public void setCreatedDate(String createdDate) {
-        this.createdDate = createdDate;
-    }
 
-    @Override
-    public int compareTo(@NonNull News o) {
-        return 0;
-    }
+
+
 }
+

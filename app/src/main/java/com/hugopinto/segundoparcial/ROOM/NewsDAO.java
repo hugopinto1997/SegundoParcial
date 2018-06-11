@@ -15,8 +15,8 @@ import java.util.List;
 public interface NewsDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertNews(NewsEntity... news);
+    void insertNews(News... news);
 
     @Query("SELECT * FROM Tabla_News")
-    LiveData<List<NewsEntity>> getAllNews();
+    LiveData<List<News>> getAllNews();
 }

@@ -1,9 +1,12 @@
 package com.hugopinto.segundoparcial.Fragments;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,6 +21,7 @@ import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.Adapters.GameAdapter;
 import com.hugopinto.segundoparcial.Classes.Game;
 import com.hugopinto.segundoparcial.R;
+import com.hugopinto.segundoparcial.ROOM.NewsViewModel;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -39,11 +43,11 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class NewsFragment extends Fragment {
 
-    RecyclerView rv;
-    GameAdapter adapter;
-    ArrayList<Game> series;
-    GridLayoutManager gManager;
-    Context contexto;
+    public RecyclerView rv;
+    public GameAdapter adapter;
+    public GridLayoutManager gManager;
+    public Context contexto;
+    public NewsViewModel nvmodel;
 
     public ArrayList<News> noticiasExtraidas;
     public String token;
@@ -95,53 +99,34 @@ public class NewsFragment extends Fragment {
         // Inflate the layout for this fragment
 
         final View view = inflater.inflate(R.layout.fragment_news, container, false);
-
-        final SharedPreferences sh = getContext().getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
-        token = sh.getString("Token", "");
         rv=view.findViewById(R.id.recycler);
-        contexto = view.getContext();
-        noticiasExtraidas= new ArrayList<News>();
-        gManager= new GridLayoutManager(view.getContext(),2);
-        gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+
+
+        nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
+        nvmodel.getAllNews().observe(this, new Observer<List<News>>() {
             @Override
-            public int getSpanSize(int position) {
-                if (position%3==0){
-                    return 2;
-                }else {
-                    return 1;
-                }
+            public void onChanged(@Nullable List<News> news) {
+                adapter = new GameAdapter((ArrayList<News>) news,getActivity());
+                gManager= new GridLayoutManager(getActivity(),2);
+                gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        if(position%3==0){
+                            return 2;
+                        }else {
+                            return 1;
+                        }
+                    }
+                });
+                rv.setLayoutManager(gManager);
+                rv.setAdapter(adapter);
             }
         });
-        rv.setLayoutManager(gManager);
-
-        Retrofit retrofit = new Retrofit.Builder().baseUrl(GameNewsAPI.ENDPOINT).addConverterFactory(GsonConverterFactory.create(new Gson())).build();
-        GameNewsAPI gameNewsAPI = retrofit.create(GameNewsAPI.class);
-        Call<ArrayList<News>> news = gameNewsAPI.getNews("Beared " + sh.getString("Token",""));
-        news.enqueue(new Callback<ArrayList<News>>() {
-            @Override
-            public void onResponse(Call<ArrayList<News>> call, Response<ArrayList<News>> response) {
-                if(response.isSuccessful()){
-                    noticiasExtraidas = response.body();
-                    adapter=new GameAdapter(noticiasExtraidas, getContext());
-                    rv.setAdapter(adapter);
-                }else {
-                    Toast.makeText(view.getContext(), "",Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ArrayList<News>> call, Throwable t) {
-
-            }
-        });
-
-
-
-
-
 
         return view;
     }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -199,3 +184,4 @@ public class NewsFragment extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 }
+

@@ -23,7 +23,7 @@ public class DecryptNews implements JsonDeserializer<News> {
         JDnews.setTitle(jsonObject.get("title").getAsString());
         JDnews.setBody(jsonObject.get("body").getAsString());
         JDnews.setGame(jsonObject.get("game").getAsString());
-        JDnews.setCreate_date(jsonObject.get("created_date").getAsString());
+        JDnews.setCreated_date(jsonObject.get("created_date").getAsString());
         JDnews.setCoverImage(jsonObject.get("coverImage").getAsString());
         JDnews.setDescription(jsonObject.get("description").getAsString());
 
