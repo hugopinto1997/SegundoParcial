@@ -1,18 +1,10 @@
 package com.hugopinto.segundoparcial.Activities;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -21,30 +13,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.hugopinto.segundoparcial.APIs.GameNewsAPI;
-import com.hugopinto.segundoparcial.APIs.News;
-import com.hugopinto.segundoparcial.Adapters.GameAdapter;
-import com.hugopinto.segundoparcial.Classes.Game;
-import com.hugopinto.segundoparcial.Fragments.GSCOFragment;
 import com.hugopinto.segundoparcial.Fragments.NewsFragment;
 import com.hugopinto.segundoparcial.R;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
-
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        GSCOFragment.OnFragmentInteractionListener, NewsFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, NewsFragment.OnFragmentInteractionListener{
 
 
 
@@ -123,17 +97,14 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setTitle("Noticias");
 
         } else if (id == R.id.nav_CSGO) {
-            miFragment = new GSCOFragment();
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("Counter Strike: GO");
 
         }  else if (id == R.id.nav_LOL) {
-            miFragment = new GSCOFragment();
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("League of Legends");
 
         } else if (id == R.id.nav_DOTA) {
-            miFragment = new GSCOFragment();
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("DOTA");
 

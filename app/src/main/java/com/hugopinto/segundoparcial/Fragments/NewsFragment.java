@@ -48,8 +48,9 @@ public class NewsFragment extends Fragment {
     public GridLayoutManager gManager;
     public Context contexto;
     public NewsViewModel nvmodel;
+    public int valor;
 
-    public ArrayList<News> noticiasExtraidas;
+    public ArrayList<News> noticiasExtraidas, backup;
     public String token;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -64,6 +65,9 @@ public class NewsFragment extends Fragment {
 
     public NewsFragment() {
         // Required empty public constructor
+    }
+    public NewsFragment(int p) {
+        valor = p;
     }
 
     /**

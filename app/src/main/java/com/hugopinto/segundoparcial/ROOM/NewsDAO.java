@@ -17,6 +17,12 @@ public interface NewsDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNews(News... news);
 
-    @Query("SELECT * FROM Tabla_News")
+
+    //@Query("SELECT * FROM Tabla_News WHERE game like '%csgo%' ")
+
+    @Query("SELECT * FROM Tabla_News ORDER BY createdDate ASC")
     LiveData<List<News>> getAllNews();
+
+    @Query("SELECT * FROM Tabla_News WHERE game like '%csgo%' ")
+    LiveData<List<News>> getCSGONEWS();
 }

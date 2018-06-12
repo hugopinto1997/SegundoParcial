@@ -25,22 +25,39 @@ public class NewsRepository {
 
     private String TokenAccess;
     private LiveData<List<News>> lista;
+    private LiveData<List<News>> listacsgo;
+
     private NewsDAO mNewsDAO;
+    private NewsDAO mNewsDAO2;
+
+
+
 
     public NewsRepository(Application application){
         NewsDB database = NewsDB.getAppDataBase(application);
         mNewsDAO= database.newsDAO();
+        mNewsDAO2= database.newsDAO();
         SharedPreferences sp = application.getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
         TokenAccess = sp.getString("Token","");
         FillAllNews();
+        FillAllNews2();
         lista = mNewsDAO.getAllNews();
+        listacsgo = mNewsDAO2.getCSGONEWS();
+
     }
     public void FillAllNews(){
         new FNews(TokenAccess,mNewsDAO).execute();
     }
+    public void FillAllNews2(){
+        new FNews(TokenAccess,mNewsDAO2).execute();
+    }
+
 
     public LiveData<List<News>> getAllNews(){
         return lista;
+    }
+    public LiveData<List<News>> getCSGONEWS(){
+        return listacsgo;
     }
 
 
@@ -87,7 +104,6 @@ public class NewsRepository {
                 @Override
                 public void onResponse(Call<ArrayList<News>> call, Response<ArrayList<News>> response) {
                     if(response.isSuccessful()){
-                        System.out.println("Hola");
                         ArrayList<News> newarray = (ArrayList<News>) response.body();
                         Collections.reverse(newarray);
                         new AsyncTaskI(mnDAO).execute(newarray);
