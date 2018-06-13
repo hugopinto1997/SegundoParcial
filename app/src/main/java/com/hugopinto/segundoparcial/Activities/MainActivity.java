@@ -14,11 +14,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.hugopinto.segundoparcial.Fragments.GenericFragment;
 import com.hugopinto.segundoparcial.Fragments.NewsFragment;
 import com.hugopinto.segundoparcial.R;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NewsFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener, NewsFragment.OnFragmentInteractionListener,
+        GenericFragment.OnFragmentInteractionListener{
 
 
 
@@ -97,14 +99,17 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setTitle("Noticias");
 
         } else if (id == R.id.nav_CSGO) {
+            miFragment = new GenericFragment();
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("Counter Strike: GO");
 
         }  else if (id == R.id.nav_LOL) {
+            miFragment = new NewsFragment();
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("League of Legends");
 
         } else if (id == R.id.nav_DOTA) {
+            miFragment = new NewsFragment();
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("DOTA");
 

@@ -20,9 +20,9 @@ public interface NewsDAO {
 
     //@Query("SELECT * FROM Tabla_News WHERE game like '%csgo%' ")
 
-    @Query("SELECT * FROM Tabla_News ORDER BY createdDate ASC")
+    @Query("SELECT * FROM Tabla_News ORDER BY createdDate DESC")
     LiveData<List<News>> getAllNews();
 
-    @Query("SELECT * FROM Tabla_News WHERE game like '%csgo%' ")
+    @Query("SELECT * FROM Tabla_News WHERE game like '%lol%' ")
     LiveData<List<News>> getCSGONEWS();
 }
