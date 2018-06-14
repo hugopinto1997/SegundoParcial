@@ -70,6 +70,7 @@ public class NewsFragment extends Fragment {
         valor = p;
     }
 
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -105,8 +106,6 @@ public class NewsFragment extends Fragment {
         final View view = inflater.inflate(R.layout.fragment_news, container, false);
         rv = view.findViewById(R.id.recycler);
         if(valor ==0){
-            
-        } else if(valor==1){
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getAllNews().observe(this, new Observer<List<News>>() {
                 @Override
@@ -128,7 +127,7 @@ public class NewsFragment extends Fragment {
                 }
             });
 
-        }else if (valor ==2){
+        } else if(valor==1){
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getCSGONEWS().observe(this, new Observer<List<News>>() {
                 @Override
@@ -149,9 +148,31 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
+
+        }else if (valor ==2){
+            nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
+            nvmodel.getLOLNEWS().observe(this, new Observer<List<News>>() {
+                @Override
+                public void onChanged(@Nullable List<News> news) {
+                    adapter = new GameAdapter((ArrayList<News>) news,getActivity());
+                    gManager= new GridLayoutManager(getActivity(),2);
+                    gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                        @Override
+                        public int getSpanSize(int position) {
+                            if(position%3==0){
+                                return 2;
+                            }else {
+                                return 1;
+                            }
+                        }
+                    });
+                    rv.setLayoutManager(gManager);
+                    rv.setAdapter(adapter);
+                }
+            });
         }else if (valor ==3){
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
-            nvmodel.getCSGONEWS().observe(this, new Observer<List<News>>() {
+            nvmodel.getOVERWATCHNEWS().observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
                     adapter = new GameAdapter((ArrayList<News>) news,getActivity());

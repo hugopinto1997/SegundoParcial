@@ -23,6 +23,12 @@ public interface NewsDAO {
     @Query("SELECT * FROM Tabla_News ORDER BY createdDate DESC")
     LiveData<List<News>> getAllNews();
 
-    @Query("SELECT * FROM Tabla_News WHERE game like '%lol%' ")
+    @Query("SELECT * FROM Tabla_News WHERE game like '%csgo%' ")
     LiveData<List<News>> getCSGONEWS();
+
+    @Query("SELECT * FROM Tabla_News WHERE game like '%lol%' ")
+    LiveData<List<News>> getLOLNEWS();
+
+    @Query("SELECT * FROM Tabla_News WHERE game like '%overwatch%' ")
+    LiveData<List<News>> getOVERWATCHNEWS();
 }

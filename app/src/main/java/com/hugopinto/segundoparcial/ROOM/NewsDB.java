@@ -9,14 +9,17 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 import com.hugopinto.segundoparcial.APIs.News;
+import com.hugopinto.segundoparcial.APIs.player;
 
 
 
-@Database(entities = {News.class}, version = 1)
+@Database(entities = {News.class, player.class}, version = 1)
 public abstract class NewsDB extends RoomDatabase {
 
    private static NewsDB INSTANCE;
    public abstract NewsDAO newsDAO();
+    public abstract PlayersDAO playersDAO();
+
 
 
     public static NewsDB getAppDataBase(Context context) {

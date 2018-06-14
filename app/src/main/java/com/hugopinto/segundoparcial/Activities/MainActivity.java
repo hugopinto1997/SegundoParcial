@@ -15,12 +15,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hugopinto.segundoparcial.Fragments.GenericFragment;
+import com.hugopinto.segundoparcial.Fragments.ImagesFragment;
 import com.hugopinto.segundoparcial.Fragments.NewsFragment;
+import com.hugopinto.segundoparcial.Fragments.TopPlayersFragment;
 import com.hugopinto.segundoparcial.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NewsFragment.OnFragmentInteractionListener,
-        GenericFragment.OnFragmentInteractionListener{
+        GenericFragment.OnFragmentInteractionListener, TopPlayersFragment.OnFragmentInteractionListener
+, ImagesFragment.OnFragmentInteractionListener{
 
 
 
@@ -94,7 +97,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_news) {
             // Handle the camera action
-            miFragment = new NewsFragment();
+            miFragment = new NewsFragment(0);
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("Noticias");
 
@@ -104,18 +107,20 @@ public class MainActivity extends AppCompatActivity
             getSupportActionBar().setTitle("Counter Strike: GO");
 
         }  else if (id == R.id.nav_LOL) {
-            miFragment = new NewsFragment();
+            miFragment = new GenericFragment();
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("League of Legends");
 
         } else if (id == R.id.nav_DOTA) {
-            miFragment = new NewsFragment();
+            miFragment = new ImagesFragment();
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("DOTA");
 
         }
         else if (id == R.id.nav_favoritos) {
-
+            miFragment = new TopPlayersFragment();
+            FragmentSeleccionado = true;
+            getSupportActionBar().setTitle("DOTA");
 
         }else if (id == R.id.nav_configuracion) {
             miActivity = new Settings();

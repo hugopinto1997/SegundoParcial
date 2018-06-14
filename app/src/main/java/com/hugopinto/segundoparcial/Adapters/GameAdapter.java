@@ -56,7 +56,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
     }
     public GameAdapter(ArrayList<News> news, Context context) {
         this.news = news;
-        this.context = context;
+        this.ctx = context;
 
     }
 

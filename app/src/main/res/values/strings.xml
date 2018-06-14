@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SegundoParcial</string>
+    <string name="app_name">Games News API</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -208,4 +208,5 @@
     <string name="body"><![CDATA[<Body>]]></string>
     <string name="fechas">DD/MM/YYYY</string>
     <string name="games">Game Name</string>
+    <string name="topname">Player name</string>
 </resources>
