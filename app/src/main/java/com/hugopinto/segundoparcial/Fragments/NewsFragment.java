@@ -3,35 +3,26 @@ package com.hugopinto.segundoparcial.Fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.hugopinto.segundoparcial.APIs.GameNewsAPI;
 import com.hugopinto.segundoparcial.APIs.News;
+import com.hugopinto.segundoparcial.APIs.player;
 import com.hugopinto.segundoparcial.Adapters.GameAdapter;
-import com.hugopinto.segundoparcial.Classes.Game;
+import com.hugopinto.segundoparcial.Adapters.PlayersAdapter;
 import com.hugopinto.segundoparcial.R;
 import com.hugopinto.segundoparcial.ROOM.NewsViewModel;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,16 +33,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * create an instance of this fragment.
  */
 public class NewsFragment extends Fragment {
-
     public RecyclerView rv;
     public GameAdapter adapter;
     public GridLayoutManager gManager;
     public Context contexto;
     public NewsViewModel nvmodel;
-    public int valor;
 
-    public ArrayList<News> noticiasExtraidas, backup;
-    public String token;
+
+
+
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -66,10 +57,6 @@ public class NewsFragment extends Fragment {
     public NewsFragment() {
         // Required empty public constructor
     }
-    public NewsFragment(int p) {
-        valor = p;
-    }
-
 
     /**
      * Use this factory method to create a new instance of
@@ -77,14 +64,14 @@ public class NewsFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment NewsFragment.
+     * @return A new instance of fragment TopPlayersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static NewsFragment newInstance(String param1, String param2) {
+    public static NewsFragment newInstance(String param1) {
         NewsFragment fragment = new NewsFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1,param1);
-        args.putString(ARG_PARAM1,param1);
+        args.putString(ARG_PARAM1, param1);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -94,7 +81,7 @@ public class NewsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -102,22 +89,22 @@ public class NewsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View view =inflater.inflate(R.layout.fragment_news, container, false);
 
-        final View view = inflater.inflate(R.layout.fragment_news, container, false);
-        rv = view.findViewById(R.id.recycler);
-        if(valor ==0){
+        rv = view.findViewById(R.id.recyclernews);
+        if (mParam1.equals("Noticias")) {
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getAllNews().observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
-                    adapter = new GameAdapter((ArrayList<News>) news,getActivity());
-                    gManager= new GridLayoutManager(getActivity(),2);
+                    adapter = new GameAdapter((ArrayList<News>) news, getActivity());
+                    gManager = new GridLayoutManager(getActivity(), 2);
                     gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                         @Override
                         public int getSpanSize(int position) {
-                            if(position%3==0){
+                            if (position % 3 == 0) {
                                 return 2;
-                            }else {
+                            } else {
                                 return 1;
                             }
                         }
@@ -126,20 +113,19 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
-
-        } else if(valor==1){
+        } else if (mParam1.equals("csgo")) {
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getCSGONEWS().observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
-                    adapter = new GameAdapter((ArrayList<News>) news,getActivity());
-                    gManager= new GridLayoutManager(getActivity(),2);
+                    adapter = new GameAdapter((ArrayList<News>) news, getActivity());
+                    gManager = new GridLayoutManager(getActivity(), 2);
                     gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                         @Override
                         public int getSpanSize(int position) {
-                            if(position%3==0){
+                            if (position % 3 == 0) {
                                 return 2;
-                            }else {
+                            } else {
                                 return 1;
                             }
                         }
@@ -148,20 +134,19 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
-
-        }else if (valor ==2){
+        } else if (mParam1.equals("lol")) {
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getLOLNEWS().observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
-                    adapter = new GameAdapter((ArrayList<News>) news,getActivity());
-                    gManager= new GridLayoutManager(getActivity(),2);
+                    adapter = new GameAdapter((ArrayList<News>) news, getActivity());
+                    gManager = new GridLayoutManager(getActivity(), 2);
                     gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                         @Override
                         public int getSpanSize(int position) {
-                            if(position%3==0){
+                            if (position % 3 == 0) {
                                 return 2;
-                            }else {
+                            } else {
                                 return 1;
                             }
                         }
@@ -170,19 +155,19 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
-        }else if (valor ==3){
+        } else if (mParam1.equals("overwatch")) {
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getOVERWATCHNEWS().observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
-                    adapter = new GameAdapter((ArrayList<News>) news,getActivity());
-                    gManager= new GridLayoutManager(getActivity(),2);
+                    adapter = new GameAdapter((ArrayList<News>) news, getActivity());
+                    gManager = new GridLayoutManager(getActivity(), 2);
                     gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
                         @Override
                         public int getSpanSize(int position) {
-                            if(position%3==0){
+                            if (position % 3 == 0) {
                                 return 2;
-                            }else {
+                            } else {
                                 return 1;
                             }
                         }
@@ -196,7 +181,6 @@ public class NewsFragment extends Fragment {
     }
 
 
-
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -207,35 +191,18 @@ public class NewsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        /*if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
-
-    /*public void prepareSeries(){
-        series = new ArrayList<>();
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-        series.add(new Game("Smesh Bras 4", "2", R.drawable.ic_csgo));
-
-
-
-    }*/
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
-    }
-
-    private void cargarnoticias(final Context con, String token){
-
     }
 
     /**
@@ -252,5 +219,5 @@ public class NewsFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-}
 
+}

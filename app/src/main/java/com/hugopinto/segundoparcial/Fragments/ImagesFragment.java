@@ -39,7 +39,7 @@ public class ImagesFragment extends Fragment {
 
     public RecyclerView rv;
     public ImagesAdapter adapter;
-    public StaggeredGridLayoutManager gManager;
+    public GridLayoutManager gManager;
     public Context contexto;
     public NewsViewModel nvmodel;
     // TODO: Rename parameter arguments, choose names that match
@@ -66,11 +66,11 @@ public class ImagesFragment extends Fragment {
      * @return A new instance of fragment ImagesFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ImagesFragment newInstance(String param1, String param2) {
+    public static ImagesFragment newInstance(String param1) {
         ImagesFragment fragment = new ImagesFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -80,7 +80,7 @@ public class ImagesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -90,18 +90,43 @@ public class ImagesFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_images, container, false);
         rv = view.findViewById(R.id.recyclerimg);
-        nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
-        nvmodel.getAllNews().observe(this, new Observer<List<News>>() {
-            @Override
-            public void onChanged(@Nullable List<News> news) {
-                adapter = new ImagesAdapter((ArrayList<News>) news,getActivity());
-                gManager= new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
-                rv.setLayoutManager(gManager);
-                rv.setAdapter(adapter);
-            }
-        });
+       if(mParam1.equals("csgo")){
+           nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
+           nvmodel.getCSGONEWS().observe(this, new Observer<List<News>>() {
+               @Override
+               public void onChanged(@Nullable List<News> news) {
+                   adapter = new ImagesAdapter((ArrayList<News>) news,getActivity());
+                   gManager= new GridLayoutManager(getActivity(),3);
+                   rv.setLayoutManager(gManager);
+                   rv.setAdapter(adapter);
+               }
+           });
+       } else if(mParam1.equals("lol")){
+           nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
+           nvmodel.getLOLNEWS().observe(this, new Observer<List<News>>() {
+               @Override
+               public void onChanged(@Nullable List<News> news) {
+                   adapter = new ImagesAdapter((ArrayList<News>) news,getActivity());
+                   gManager= new GridLayoutManager(getActivity(),3);
+                   rv.setLayoutManager(gManager);
+                   rv.setAdapter(adapter);
+               }
+           });
+       }else if(mParam1.equals("overwatch")){
+           nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
+           nvmodel.getOVERWATCHNEWS().observe(this, new Observer<List<News>>() {
+               @Override
+               public void onChanged(@Nullable List<News> news) {
+                   adapter = new ImagesAdapter((ArrayList<News>) news,getActivity());
+                   gManager= new GridLayoutManager(getActivity(),3);
+                   rv.setLayoutManager(gManager);
+                   rv.setAdapter(adapter);
+               }
+           });
+       }
         return view;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -113,12 +138,12 @@ public class ImagesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        /*if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
@@ -141,4 +166,5 @@ public class ImagesFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

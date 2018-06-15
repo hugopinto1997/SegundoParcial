@@ -11,9 +11,9 @@
     <string name="favoritor">Favoritos</string>
     <string name="configuracion">Configuración</string>
     <string name="secondmenu">Area Personal</string>
-    <string name="COUNTERSTRIKE">Counter Strike: GO</string>
-    <string name="LeagueofLegends">League of Legends</string>
-    <string name="JDota">Dota</string>
+    <string name="COUNTERSTRIKE">csgo</string>
+    <string name="LeagueofLegends">lol</string>
+    <string name="JDota">overwatch</string>
     <string name="Titulo">Titulo</string>
     <string name="Desc">Descripcion de la noticia</string>
     <string name="title_activity_login">Sign in</string>

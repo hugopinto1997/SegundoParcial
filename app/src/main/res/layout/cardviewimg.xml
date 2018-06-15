@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="150dp"
-    android:layout_height="200dp"
+    android:layout_width="135dp"
+    android:layout_height="135dp"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardviewimage"
-    android:elevation="7dp"
-    android:layout_margin="1dp"
-    card_view:cardCornerRadius="2dp">
+    android:elevation="7dp">
 
     <ImageView
         android:layout_width="match_parent"
         android:id="@+id/imggame"
-        android:layout_margin="1dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_csgo"
         android:layout_height="match_parent"/>

@@ -2,7 +2,6 @@ package com.hugopinto.segundoparcial.Activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
@@ -15,15 +14,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.hugopinto.segundoparcial.Fragments.GenericFragment;
-import com.hugopinto.segundoparcial.Fragments.ImagesFragment;
 import com.hugopinto.segundoparcial.Fragments.NewsFragment;
-import com.hugopinto.segundoparcial.Fragments.TopPlayersFragment;
 import com.hugopinto.segundoparcial.R;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, NewsFragment.OnFragmentInteractionListener,
-        GenericFragment.OnFragmentInteractionListener, TopPlayersFragment.OnFragmentInteractionListener
-, ImagesFragment.OnFragmentInteractionListener{
+        implements NavigationView.OnNavigationItemSelectedListener{
 
 
 
@@ -33,8 +28,7 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenido,new NewsFragment()).commit();
-        getSupportActionBar().setTitle("Game News UCA");
+        getSupportFragmentManager().beginTransaction().replace(R.id.contenido, NewsFragment.newInstance("Noticias")).commit();
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -97,30 +91,27 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_news) {
             // Handle the camera action
-            miFragment = new NewsFragment(0);
+            miFragment = NewsFragment.newInstance(item.getTitle().toString());
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("Noticias");
 
         } else if (id == R.id.nav_CSGO) {
-            miFragment = new GenericFragment();
+            miFragment = GenericFragment.newInstance(item.getTitle().toString());
             FragmentSeleccionado = true;
-            getSupportActionBar().setTitle("Counter Strike: GO");
 
         }  else if (id == R.id.nav_LOL) {
-            miFragment = new GenericFragment();
+            miFragment = GenericFragment.newInstance(item.getTitle().toString());
             FragmentSeleccionado = true;
-            getSupportActionBar().setTitle("League of Legends");
 
         } else if (id == R.id.nav_DOTA) {
-            miFragment = new ImagesFragment();
+            miFragment = GenericFragment.newInstance(item.getTitle().toString());
             FragmentSeleccionado = true;
-            getSupportActionBar().setTitle("DOTA");
 
         }
         else if (id == R.id.nav_favoritos) {
-            miFragment = new TopPlayersFragment();
+            /*miFragment = new TopPlayersFragment();
             FragmentSeleccionado = true;
-            getSupportActionBar().setTitle("DOTA");
+            getSupportActionBar().setTitle("DOTA");*/
 
         }else if (id == R.id.nav_configuracion) {
             miActivity = new Settings();
@@ -137,10 +128,6 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
+
 }
-
-

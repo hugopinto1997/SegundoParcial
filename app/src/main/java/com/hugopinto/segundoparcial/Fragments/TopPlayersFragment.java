@@ -68,11 +68,11 @@ public class TopPlayersFragment extends Fragment {
      * @return A new instance of fragment TopPlayersFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TopPlayersFragment newInstance(String param1, String param2) {
+    public static TopPlayersFragment newInstance(String param1) {
         TopPlayersFragment fragment = new TopPlayersFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        //args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -82,7 +82,7 @@ public class TopPlayersFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            //mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -93,18 +93,42 @@ public class TopPlayersFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_top_players, container, false);
 
         rv = view.findViewById(R.id.recyclertop);
-            nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
-            nvmodel.getAllPlayers().observe(this, new Observer<List<player>>() {
-                @Override
-                public void onChanged(@Nullable List<player> news) {
-                    adapter = new PlayersAdapter((ArrayList<player>) news,getActivity());
-                    lManager= new LinearLayoutManager(getActivity());
-                    rv.setLayoutManager(lManager);
-                    rv.setAdapter(adapter);
-                }
-            });
+        nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
+       if(mParam1.equals("csgo")){
+           nvmodel.getAllPlayers().observe(this, new Observer<List<player>>() {
+               @Override
+               public void onChanged(@Nullable List<player> news) {
+                   adapter = new PlayersAdapter((ArrayList<player>) news,getActivity());
+                   lManager= new LinearLayoutManager(getActivity());
+                   rv.setLayoutManager(lManager);
+                   rv.setAdapter(adapter);
+               }
+           });
+       }else if(mParam1.equals("lol")){
+           nvmodel.getAllPlayers().observe(this, new Observer<List<player>>() {
+               @Override
+               public void onChanged(@Nullable List<player> news) {
+                   adapter = new PlayersAdapter((ArrayList<player>) news,getActivity());
+                   lManager= new LinearLayoutManager(getActivity());
+                   rv.setLayoutManager(lManager);
+                   rv.setAdapter(adapter);
+               }
+           });
+
+       }else if(mParam1.equals("overwatch")){
+           nvmodel.getAllPlayers().observe(this, new Observer<List<player>>() {
+               @Override
+               public void onChanged(@Nullable List<player> news) {
+                   adapter = new PlayersAdapter((ArrayList<player>) news,getActivity());
+                   lManager= new LinearLayoutManager(getActivity());
+                   rv.setLayoutManager(lManager);
+                   rv.setAdapter(adapter);
+               }
+           });
+       }
         return view;
     }
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -116,12 +140,12 @@ public class TopPlayersFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
+        /*if (context instanceof OnFragmentInteractionListener) {
             mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
-        }
+        }*/
     }
 
     @Override
@@ -144,4 +168,5 @@ public class TopPlayersFragment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
 }

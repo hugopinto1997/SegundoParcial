@@ -82,11 +82,11 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
         holder.img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(context, NewsFullView.class);
+                Intent newIntent = new Intent(v.getContext(), NewsFullView.class);
                 Bundle caja = new Bundle();
                 caja.putSerializable("key", noticia);
                 newIntent.putExtras(caja);
-                context.startActivity(newIntent);
+                v.getContext().startActivity(newIntent);
             }
         });
     }
