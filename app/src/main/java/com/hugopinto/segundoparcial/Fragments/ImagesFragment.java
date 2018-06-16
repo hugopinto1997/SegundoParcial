@@ -89,10 +89,9 @@ public class ImagesFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_images, container, false);
-        /*rv = view.findViewById(R.id.recyclerimg);
-       if(mParam1.equals("csgo")){
+        rv = view.findViewById(R.id.recyclerimg);
            nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
-           nvmodel.getCSGONEWS().observe(this, new Observer<List<News>>() {
+           nvmodel.getNewsByCat().observe(this, new Observer<List<News>>() {
                @Override
                public void onChanged(@Nullable List<News> news) {
                    adapter = new ImagesAdapter((ArrayList<News>) news,getActivity());
@@ -101,7 +100,7 @@ public class ImagesFragment extends Fragment {
                    rv.setAdapter(adapter);
                }
            });
-       } else if(mParam1.equals("lol")){
+      /* } else if(mParam1.equals("lol")){
            nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
            nvmodel.getLOLNEWS().observe(this, new Observer<List<News>>() {
                @Override

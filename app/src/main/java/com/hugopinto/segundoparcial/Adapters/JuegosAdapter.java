@@ -1,6 +1,7 @@
 package com.hugopinto.segundoparcial.Adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ public abstract class JuegosAdapter extends RecyclerView.Adapter<JuegosAdapter.J
     private ArrayList<String> news;
     public Context context;
     public Context ctx;
+    private SharedPreferences juego;
 
     public static class JuegosViewHolder extends RecyclerView.ViewHolder {
         CardView card;
@@ -64,6 +66,9 @@ public abstract class JuegosAdapter extends RecyclerView.Adapter<JuegosAdapter.J
         holder.card.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                juego= context.getSharedPreferences("Juego", Context.MODE_PRIVATE);
+
+                juego.edit().putString("Juegos",(String) noticia).apply();
                 up(noticia);
             }
         });

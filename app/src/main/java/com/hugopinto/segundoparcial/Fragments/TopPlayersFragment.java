@@ -94,8 +94,7 @@ public class TopPlayersFragment extends Fragment {
 
         rv = view.findViewById(R.id.recyclertop);
         nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
-       /*if(mParam1.equals("csgo")){
-           nvmodel.getCSGOPlayers().observe(this, new Observer<List<player>>() {
+        nvmodel.getPlayers().observe(this, new Observer<List<player>>() {
                @Override
                public void onChanged(@Nullable List<player> news) {
                    adapter = new PlayersAdapter((ArrayList<player>) news,getActivity());
@@ -104,28 +103,6 @@ public class TopPlayersFragment extends Fragment {
                    rv.setAdapter(adapter);
                }
            });
-       }else if(mParam1.equals("lol")){
-           nvmodel.getLOLPlayers().observe(this, new Observer<List<player>>() {
-               @Override
-               public void onChanged(@Nullable List<player> news) {
-                   adapter = new PlayersAdapter((ArrayList<player>) news,getActivity());
-                   lManager= new LinearLayoutManager(getActivity());
-                   rv.setLayoutManager(lManager);
-                   rv.setAdapter(adapter);
-               }
-           });
-
-       }else if(mParam1.equals("overwatch")){
-           nvmodel.getOVERWATCHPlayers().observe(this, new Observer<List<player>>() {
-               @Override
-               public void onChanged(@Nullable List<player> news) {
-                   adapter = new PlayersAdapter((ArrayList<player>) news,getActivity());
-                   lManager= new LinearLayoutManager(getActivity());
-                   rv.setLayoutManager(lManager);
-                   rv.setAdapter(adapter);
-               }
-           });
-       }*/
         return view;
     }
 

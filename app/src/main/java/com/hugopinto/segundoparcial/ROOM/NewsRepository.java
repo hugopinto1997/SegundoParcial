@@ -25,68 +25,45 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class NewsRepository {
 
+    private String juegazo;
     private String TokenAccess;
     private LiveData<List<News>> lista;
     private LiveData<List<News>> listacsgo;
-    private LiveData<List<News>> listalol;
-    private LiveData<List<News>> listaoverwatch;
     private LiveData<List<String>> Game;
     private LiveData<List<player>> listaplayer;
-    private LiveData<List<player>> listaplayer2;
-    private LiveData<List<player>> listaplayer3;
     private Application applicationc;
 
 
 
     private NewsDAO mNewsDAO;
-    private NewsDAO mNewsDAO2;
-    private NewsDAO mNewsDAO3;
-    private NewsDAO mNewsDAO4;
-    private NewsDAO mNewsDAO5;
     private PlayersDAO mPlayersDAO;
 
-    private  SharedPreferences sp;
+    private  SharedPreferences sp,sp2;
 
 
 
 
 
-    public NewsRepository(Application application, String buscpor){
+    public NewsRepository(Application application){
         NewsDB database = NewsDB.getAppDataBase(application);
         mNewsDAO= database.newsDAO();
-        applicationc = application;
-        mNewsDAO2= database.newsDAO();
-        mNewsDAO3= database.newsDAO();
-        mNewsDAO4= database.newsDAO();
         mPlayersDAO = database.playersDAO();
+        applicationc = application;
         sp = application.getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
         TokenAccess = sp.getString("Token","");
+        SharedPreferences jgs = application.getSharedPreferences("Juego", Context.MODE_PRIVATE);
+        juegazo=  jgs.getString("Juegos","");
         FillAllNews();
-        FillAllNews2();
-        FillAllNews3();
-        FillAllNews4();
         FillAllPlayers();
         lista = mNewsDAO.getAllNews();
         Game = mNewsDAO.getGame();
-        listacsgo = mNewsDAO2.getCSGONEWS(buscpor);
-        listaoverwatch = mNewsDAO4.getOVERWATCHNEWS();
-        listaplayer = mPlayersDAO.getCSGOPlayers();
-        listaplayer2 = mPlayersDAO.getLOLPlayers();
-        listaplayer3 = mPlayersDAO.getOVERWATCHPlayers();
+        listacsgo = mNewsDAO.getNewsByCat(juegazo);
+        listaplayer = mPlayersDAO.getPlayers(juegazo);
 
 
     }
     public void FillAllNews(){
         new FNews(TokenAccess,mNewsDAO, applicationc).execute();
-    }
-    public void FillAllNews2(){
-        new FNews(TokenAccess,mNewsDAO2, applicationc).execute();
-    }
-    public void FillAllNews3(){
-        new FNews(TokenAccess,mNewsDAO3, applicationc).execute();
-    }
-    public void FillAllNews4(){
-        new FNews(TokenAccess,mNewsDAO4, applicationc).execute();
     }
     public void FillAllPlayers(){
         new FPlayers(TokenAccess,mPlayersDAO).execute();
@@ -97,23 +74,12 @@ public class NewsRepository {
     public LiveData<List<News>> getAllNews(){
         return lista;
     }
-    public LiveData<List<News>> getCSGONEWS(String game){
-        return mNewsDAO3.getCSGONEWS(game);
+    public LiveData<List<News>> getNewsByCat(){
+        return listacsgo;
     }
-    public LiveData<List<News>> getLOLNEWS(){
-        return listalol;
-    }
-    public LiveData<List<News>> getOVERWATCHNEWS(){
-        return listaoverwatch;
-    }
-    public LiveData<List<player>> getLOLPlayers(){
-        return listaplayer2;
-    }
-    public LiveData<List<player>> getCSGOPlayers(){
+
+    public LiveData<List<player>> getPlayers(){
         return listaplayer;
-    }
-    public LiveData<List<player>> getOVERWATCHPlayers(){
-        return listaplayer3;
     }
     public LiveData<List<String>> getGames() {
         return Game;

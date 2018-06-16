@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+
     <include
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
@@ -27,15 +28,17 @@
         android:background="@drawable/nnavdrawbg"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main">
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
+            android:layout_marginTop="180dp"
             android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
+            android:background="@drawable/animatedbg2"
             android:layout_height="wrap_content">
 
         <android.support.design.widget.NavigationView
-            android:layout_marginTop="180dp"
         android:layout_below="@id/nav_view2"
             android:id="@+id/nav_view"
         android:layout_width="match_parent"
@@ -51,6 +54,7 @@
 
     </android.support.design.widget.NavigationView>
 
+
             <include layout="@layout/content_main2"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/nav_view"
@@ -59,6 +63,8 @@
                 android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 />
+
+
             <android.support.design.widget.NavigationView
                 android:layout_below="@id/incluido"
                 android:id="@+id/nav_view3"
@@ -76,7 +82,7 @@
 
 
         </RelativeLayout>
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
 
 
         <!--<include layout="@layout/juegos"
@@ -91,7 +97,6 @@
 
 
     </android.support.design.widget.NavigationView>
-
 
 
 

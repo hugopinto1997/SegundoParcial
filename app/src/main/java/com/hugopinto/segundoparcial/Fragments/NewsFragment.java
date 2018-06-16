@@ -3,6 +3,7 @@ package com.hugopinto.segundoparcial.Fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -41,6 +42,7 @@ public class NewsFragment extends Fragment {
     public GridLayoutManager gManager;
     public Context contexto;
     public NewsViewModel nvmodel;
+    private String juego;
 
 
 
@@ -93,11 +95,12 @@ public class NewsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_news, container, false);
-
+        SharedPreferences sharedPref = getContext().getSharedPreferences("Juego",Context.MODE_PRIVATE);
+        juego = sharedPref.getString("Juegos","");
         rv = view.findViewById(R.id.recyclernews);
 
-        /*if (mParam1.equals("Noticias")) {
-            nvmodel = ViewModelProviders.of(this, new NewsViewModel(getActivity().getApplication(), mParam1)).get(NewsViewModel.class);
+        if (juego.contains("Noticias")) {
+            nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getAllNews().observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
@@ -117,9 +120,9 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
-        } else {*/
+        }else if(mParam1.equals("Noticias")){
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
-            nvmodel.getCSGONEWS(mParam1).observe(this, new Observer<List<News>>() {
+            nvmodel.getAllNews().observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
                     adapter = new GameAdapter((ArrayList<News>) news, getActivity());
@@ -138,7 +141,30 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
-        /*}*//* else if (mParam1.equals("lol")) {
+
+        }
+        else{
+            nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
+            nvmodel.getNewsByCat().observe(this, new Observer<List<News>>() {
+                @Override
+                public void onChanged(@Nullable List<News> news) {
+                    adapter = new GameAdapter((ArrayList<News>) news, getActivity());
+                    gManager = new GridLayoutManager(getActivity(), 2);
+                    gManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+                        @Override
+                        public int getSpanSize(int position) {
+                            if (position % 3 == 0) {
+                                return 2;
+                            } else {
+                                return 1;
+                            }
+                        }
+                    });
+                    rv.setLayoutManager(gManager);
+                    rv.setAdapter(adapter);
+                }
+            });
+        }/* else if (mParam1.equals("lol")) {
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getLOLNEWS().observe(this, new Observer<List<News>>() {
                 @Override

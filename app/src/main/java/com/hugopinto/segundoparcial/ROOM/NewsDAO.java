@@ -6,6 +6,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
+import android.content.Context;
 
 import com.hugopinto.segundoparcial.APIs.News;
 
@@ -13,6 +14,7 @@ import java.util.List;
 
 @Dao
 public interface NewsDAO {
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertNews(News... news);
@@ -27,11 +29,6 @@ public interface NewsDAO {
     LiveData<List<String>> getGame();
 
     @Query("SELECT * FROM Tabla_News WHERE game = :busc order by createdDate DESC")
-    LiveData<List<News>> getCSGONEWS(String busc);
+    LiveData<List<News>> getNewsByCat(String busc);
 
-    @Query("SELECT * FROM Tabla_News WHERE game like '%lol%' ")
-    LiveData<List<News>> getLOLNEWS();
-
-    @Query("SELECT * FROM Tabla_News WHERE game like '%overwatch%' ")
-    LiveData<List<News>> getOVERWATCHNEWS();
 }
