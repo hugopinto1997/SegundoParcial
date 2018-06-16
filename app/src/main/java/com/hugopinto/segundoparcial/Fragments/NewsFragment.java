@@ -96,8 +96,8 @@ public class NewsFragment extends Fragment {
 
         rv = view.findViewById(R.id.recyclernews);
 
-        if (mParam1.equals("Noticias")) {
-            nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
+        /*if (mParam1.equals("Noticias")) {
+            nvmodel = ViewModelProviders.of(this, new NewsViewModel(getActivity().getApplication(), mParam1)).get(NewsViewModel.class);
             nvmodel.getAllNews().observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
@@ -117,9 +117,9 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
-        } else if (mParam1.equals("csgo")) {
+        } else {*/
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
-            nvmodel.getCSGONEWS().observe(this, new Observer<List<News>>() {
+            nvmodel.getCSGONEWS(mParam1).observe(this, new Observer<List<News>>() {
                 @Override
                 public void onChanged(@Nullable List<News> news) {
                     adapter = new GameAdapter((ArrayList<News>) news, getActivity());
@@ -138,7 +138,7 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
-        } else if (mParam1.equals("lol")) {
+        /*}*//* else if (mParam1.equals("lol")) {
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
             nvmodel.getLOLNEWS().observe(this, new Observer<List<News>>() {
                 @Override
@@ -180,7 +180,7 @@ public class NewsFragment extends Fragment {
                     rv.setAdapter(adapter);
                 }
             });
-        }
+        }*/
         return view;
     }
 

@@ -1,27 +1,43 @@
 package com.hugopinto.segundoparcial.Activities;
 
 import android.app.Activity;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 
+import com.hugopinto.segundoparcial.APIs.News;
+import com.hugopinto.segundoparcial.Adapters.ImagesAdapter;
+import com.hugopinto.segundoparcial.Adapters.JuegosAdapter;
 import com.hugopinto.segundoparcial.Fragments.GenericFragment;
+import com.hugopinto.segundoparcial.Fragments.JuegosFragment;
 import com.hugopinto.segundoparcial.Fragments.NewsFragment;
 import com.hugopinto.segundoparcial.R;
+import com.hugopinto.segundoparcial.ROOM.NewsViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
-
+        implements NavigationView.OnNavigationItemSelectedListener, JuegosFragment.OnFragmentInteractionListener{
 
 
     @Override
@@ -31,7 +47,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportFragmentManager().beginTransaction().replace(R.id.contenido, NewsFragment.newInstance("Noticias")).commit();
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -43,6 +58,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         NavigationView navigationView2 = (NavigationView) findViewById(R.id.nav_view3);
         navigationView2.setNavigationItemSelectedListener(this);
+
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.incluido, new JuegosFragment()).commit();
+
+
+
 
 
 
@@ -115,5 +136,8 @@ public class MainActivity extends AppCompatActivity
     }
 
 
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
+    }
 }

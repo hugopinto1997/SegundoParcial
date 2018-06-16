@@ -13,6 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+
+
+
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view2"
         android:layout_width="wrap_content"
@@ -24,7 +27,9 @@
         android:background="@drawable/nnavdrawbg"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_main">
-
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -46,7 +51,7 @@
 
     </android.support.design.widget.NavigationView>
 
-            <include layout="@layout/cardviewcat"
+            <include layout="@layout/content_main2"
                 android:layout_marginTop="10dp"
                 android:layout_below="@id/nav_view"
                 android:layout_width="match_parent"
@@ -71,6 +76,7 @@
 
 
         </RelativeLayout>
+        </ScrollView>
 
 
         <!--<include layout="@layout/juegos"
@@ -85,7 +91,6 @@
 
 
     </android.support.design.widget.NavigationView>
-
 
 
 

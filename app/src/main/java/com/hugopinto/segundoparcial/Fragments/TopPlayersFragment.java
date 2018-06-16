@@ -94,7 +94,7 @@ public class TopPlayersFragment extends Fragment {
 
         rv = view.findViewById(R.id.recyclertop);
         nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
-       if(mParam1.equals("csgo")){
+       /*if(mParam1.equals("csgo")){
            nvmodel.getCSGOPlayers().observe(this, new Observer<List<player>>() {
                @Override
                public void onChanged(@Nullable List<player> news) {
@@ -125,7 +125,7 @@ public class TopPlayersFragment extends Fragment {
                    rv.setAdapter(adapter);
                }
            });
-       }
+       }*/
         return view;
     }
 

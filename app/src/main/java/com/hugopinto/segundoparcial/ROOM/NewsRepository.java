@@ -12,12 +12,9 @@ import com.google.gson.Gson;
 import com.hugopinto.segundoparcial.APIs.GameNewsAPI;
 import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.APIs.player;
-import com.hugopinto.segundoparcial.APIs.Category;
 import com.hugopinto.segundoparcial.Activities.Login;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -33,6 +30,7 @@ public class NewsRepository {
     private LiveData<List<News>> listacsgo;
     private LiveData<List<News>> listalol;
     private LiveData<List<News>> listaoverwatch;
+    private LiveData<List<String>> Game;
     private LiveData<List<player>> listaplayer;
     private LiveData<List<player>> listaplayer2;
     private LiveData<List<player>> listaplayer3;
@@ -44,8 +42,8 @@ public class NewsRepository {
     private NewsDAO mNewsDAO2;
     private NewsDAO mNewsDAO3;
     private NewsDAO mNewsDAO4;
+    private NewsDAO mNewsDAO5;
     private PlayersDAO mPlayersDAO;
-    //private CatDAO mCatDAO;
 
     private  SharedPreferences sp;
 
@@ -53,7 +51,7 @@ public class NewsRepository {
 
 
 
-    public NewsRepository(Application application){
+    public NewsRepository(Application application, String buscpor){
         NewsDB database = NewsDB.getAppDataBase(application);
         mNewsDAO= database.newsDAO();
         applicationc = application;
@@ -61,7 +59,6 @@ public class NewsRepository {
         mNewsDAO3= database.newsDAO();
         mNewsDAO4= database.newsDAO();
         mPlayersDAO = database.playersDAO();
-        //mCatDAO = database.catDAO();
         sp = application.getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
         TokenAccess = sp.getString("Token","");
         FillAllNews();
@@ -70,8 +67,8 @@ public class NewsRepository {
         FillAllNews4();
         FillAllPlayers();
         lista = mNewsDAO.getAllNews();
-        listacsgo = mNewsDAO2.getCSGONEWS();
-        listalol = mNewsDAO3.getLOLNEWS();
+        Game = mNewsDAO.getGame();
+        listacsgo = mNewsDAO2.getCSGONEWS(buscpor);
         listaoverwatch = mNewsDAO4.getOVERWATCHNEWS();
         listaplayer = mPlayersDAO.getCSGOPlayers();
         listaplayer2 = mPlayersDAO.getLOLPlayers();
@@ -100,8 +97,8 @@ public class NewsRepository {
     public LiveData<List<News>> getAllNews(){
         return lista;
     }
-    public LiveData<List<News>> getCSGONEWS(){
-        return listacsgo;
+    public LiveData<List<News>> getCSGONEWS(String game){
+        return mNewsDAO3.getCSGONEWS(game);
     }
     public LiveData<List<News>> getLOLNEWS(){
         return listalol;
@@ -118,7 +115,9 @@ public class NewsRepository {
     public LiveData<List<player>> getOVERWATCHPlayers(){
         return listaplayer3;
     }
-
+    public LiveData<List<String>> getGames() {
+        return Game;
+    }
 
 
     private static class AsyncTaskI extends AsyncTask<ArrayList<News>,Void,Void>{
