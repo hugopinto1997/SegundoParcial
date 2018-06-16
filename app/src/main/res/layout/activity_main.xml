@@ -26,12 +26,12 @@
         app:headerLayout="@layout/nav_header_main">
 
         <RelativeLayout
-            android:layout_marginTop="1dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <android.support.design.widget.NavigationView
-        android:layout_below="@id/nav_view"
+            android:layout_marginTop="180dp"
+        android:layout_below="@id/nav_view2"
             android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,9 +47,11 @@
     </android.support.design.widget.NavigationView>
 
             <include layout="@layout/cardviewcat"
+                android:layout_marginTop="10dp"
                 android:layout_below="@id/nav_view"
                 android:layout_width="match_parent"
                 android:id="@+id/incluido"
+                android:layout_marginBottom="10dp"
                 android:layout_height="wrap_content"
                 />
             <android.support.design.widget.NavigationView
@@ -59,8 +61,7 @@
                 android:layout_height="wrap_content"
                 app:menu="@menu/activity_main_drawer2"
                 app:itemTextColor="@android:color/white"
-                android:layout_gravity="end"
-                app:itemBackground="@drawable/animatedbg2"
+                app:itemBackground="@drawable/side_nav_bar3"
                 app:itemIconTint="@android:color/white"
                 android:background="@drawable/animatedbg2"
                 android:fitsSystemWindows="true"
