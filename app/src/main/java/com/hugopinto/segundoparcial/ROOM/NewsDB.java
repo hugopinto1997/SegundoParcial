@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.hugopinto.segundoparcial.APIs.Category;
 import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.APIs.player;
 

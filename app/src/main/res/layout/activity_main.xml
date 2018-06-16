@@ -14,7 +14,7 @@
         android:layout_height="match_parent" />
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/nav_view"
+        android:id="@+id/nav_view2"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:itemTextColor="@android:color/white"
@@ -23,7 +23,70 @@
         app:itemIconTint="@android:color/white"
         android:background="@drawable/nnavdrawbg"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/nav_header_main"
-        app:menu="@menu/activity_main_drawer" />
+        app:headerLayout="@layout/nav_header_main">
+
+        <RelativeLayout
+            android:layout_marginTop="1dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <android.support.design.widget.NavigationView
+        android:layout_below="@id/nav_view"
+            android:id="@+id/nav_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:menu="@menu/activity_main_drawer"
+        app:itemTextColor="@android:color/white"
+        android:layout_gravity="start"
+        app:itemBackground="@drawable/animatedbg2"
+        app:itemIconTint="@android:color/white"
+        android:background="@drawable/animatedbg2"
+        android:fitsSystemWindows="true"
+        >
+
+    </android.support.design.widget.NavigationView>
+
+            <include layout="@layout/cardviewcat"
+                android:layout_below="@id/nav_view"
+                android:layout_width="match_parent"
+                android:id="@+id/incluido"
+                android:layout_height="wrap_content"
+                />
+            <android.support.design.widget.NavigationView
+                android:layout_below="@id/incluido"
+                android:id="@+id/nav_view3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:menu="@menu/activity_main_drawer2"
+                app:itemTextColor="@android:color/white"
+                android:layout_gravity="end"
+                app:itemBackground="@drawable/animatedbg2"
+                app:itemIconTint="@android:color/white"
+                android:background="@drawable/animatedbg2"
+                android:fitsSystemWindows="true"
+                >
+
+            </android.support.design.widget.NavigationView>
+
+
+        </RelativeLayout>
+
+
+        <!--<include layout="@layout/juegos"
+            android:layout_width="match_parent"
+            android:layout_marginTop="200dp"
+            android:layout_height="wrap_content"
+            />-->
+
+
+
+
+
+
+    </android.support.design.widget.NavigationView>
+
+
+
+
 
 </android.support.v4.widget.DrawerLayout>

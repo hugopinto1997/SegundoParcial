@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        NavigationView navigationView2 = (NavigationView) findViewById(R.id.nav_view3);
+        navigationView2.setNavigationItemSelectedListener(this);
 
 
 
@@ -98,26 +100,7 @@ public class MainActivity extends AppCompatActivity
             FragmentSeleccionado = true;
             getSupportActionBar().setTitle("Noticias");
 
-        } else if (id == R.id.nav_CSGO) {
-            miFragment = GenericFragment.newInstance(item.getTitle().toString());
-            FragmentSeleccionado = true;
-
-        }  else if (id == R.id.nav_LOL) {
-            miFragment = GenericFragment.newInstance(item.getTitle().toString());
-            FragmentSeleccionado = true;
-
-        } else if (id == R.id.nav_DOTA) {
-            miFragment = GenericFragment.newInstance(item.getTitle().toString());
-            FragmentSeleccionado = true;
-
-        }
-        else if (id == R.id.nav_favoritos) {
-            /*miFragment = new TopPlayersFragment();
-            FragmentSeleccionado = true;
-            getSupportActionBar().setTitle("DOTA");*/
-
-        }else if (id == R.id.nav_configuracion) {
-            miActivity = new Settings();
+        } else if (id == R.id.nav_configuracion) {
             Intent intent = new Intent(getApplicationContext(), Settings.class);
             startActivity(intent);
 

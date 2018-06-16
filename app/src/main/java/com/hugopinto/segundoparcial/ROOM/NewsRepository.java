@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import com.hugopinto.segundoparcial.APIs.GameNewsAPI;
 import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.APIs.player;
+import com.hugopinto.segundoparcial.APIs.Category;
 import com.hugopinto.segundoparcial.Activities.Login;
 
 import java.util.ArrayList;
@@ -44,6 +45,7 @@ public class NewsRepository {
     private NewsDAO mNewsDAO3;
     private NewsDAO mNewsDAO4;
     private PlayersDAO mPlayersDAO;
+    //private CatDAO mCatDAO;
 
     private  SharedPreferences sp;
 
@@ -59,6 +61,7 @@ public class NewsRepository {
         mNewsDAO3= database.newsDAO();
         mNewsDAO4= database.newsDAO();
         mPlayersDAO = database.playersDAO();
+        //mCatDAO = database.catDAO();
         sp = application.getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
         TokenAccess = sp.getString("Token","");
         FillAllNews();
@@ -242,5 +245,62 @@ public class NewsRepository {
         }
     }
 
+    /*private static class AsyncTaskI3 extends AsyncTask<ArrayList<Category>,Void,Void>{
+
+        private CatDAO cDao;
+
+        AsyncTaskI3(CatDAO cDao){
+            this.cDao= cDao;
+        }
+
+        @Override
+        protected Void doInBackground(ArrayList<Category>... arrayLists) {
+            ArrayList<Category> Not = arrayLists[0];
+            for(int e=0; e<Not.size(); e++){
+                Category p = Not.get(e);
+                cDao.insertCategory(p);
+            }
+            return null;
+        }
+
+
+    }
+    private static class FCats extends AsyncTask<Void,Void,Void> {
+
+        private String TokAcces;
+        private CatDAO ctsDAO;
+        private static Application contexto;
+
+        public FCats(String token,CatDAO csDAO){
+            this.TokAcces= token;
+            this.ctsDAO= csDAO;
+        }
+
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            Retrofit retrofit = new Retrofit.Builder().baseUrl(GameNewsAPI.ENDPOINT).addConverterFactory(GsonConverterFactory.create(new Gson())).build();
+            GameNewsAPI GNAPI = retrofit.create(GameNewsAPI.class);
+            Call<ArrayList<Category>> news = GNAPI.getCategoria("Beared " + TokAcces);
+            news.enqueue(new Callback<ArrayList<Category>>() {
+
+
+                @Override
+                public void onResponse(Call<ArrayList<Category>> call, Response<ArrayList<Category>> response) {
+                    if(response.isSuccessful()){
+                        ArrayList<Category> newarray = (ArrayList<Category>) response.body();
+                        new AsyncTaskI2(plysDAO).execute(newarray);
+
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ArrayList<Category>> call, Throwable t) {
+                    System.out.println("on failure");
+                }
+            });
+            return null;
+        }
+    }*/
 
 }
