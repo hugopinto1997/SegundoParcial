@@ -43,7 +43,8 @@
         <activity
             android:name=".Activities.back"
             android:label="@string/title_activity_back"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activities.PlayerFullView"></activity>
     </application>
 
 </manifest>
