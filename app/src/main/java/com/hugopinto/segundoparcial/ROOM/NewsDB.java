@@ -13,7 +13,7 @@ import com.hugopinto.segundoparcial.APIs.player;
 
 
 
-@Database(entities = {News.class, player.class}, version = 1)
+@Database(entities = {News.class, player.class}, version = 2)
 public abstract class NewsDB extends RoomDatabase {
 
    private static NewsDB INSTANCE;

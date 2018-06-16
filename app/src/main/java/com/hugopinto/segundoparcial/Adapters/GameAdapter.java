@@ -2,6 +2,7 @@ package com.hugopinto.segundoparcial.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -9,8 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
     private ArrayList<News> news;
     public Context ctx;
     public Context context;
+    private LinearLayout layout;
+    private AnimationDrawable animacion;
 
 
 
@@ -51,6 +56,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
             ctx= itemView.getContext();
 
 
+
         }
 
     }
@@ -65,6 +71,12 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
     @Override
     public GamesViewHolder onCreateViewHolder(ViewGroup parent, int ViewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.cardview,parent,false);
+        layout = v.findViewById(R.id.elbackground);
+        animacion = (AnimationDrawable) layout.getBackground();
+        animacion.setEnterFadeDuration(2000);
+        animacion.setExitFadeDuration(2000);
+        animacion.start();
+
         return (new GamesViewHolder(v));
     }
 

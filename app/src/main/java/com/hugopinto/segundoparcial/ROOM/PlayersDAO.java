@@ -16,8 +16,14 @@ public interface PlayersDAO {
     void insertPlayer(player... players);
 
 
-    @Query("SELECT * FROM Tabla_Player ORDER BY name DESC")
-    LiveData<List<player>> getAllPlayers();
+    @Query("SELECT * FROM Tabla_Player WHERE game like '%overwatch%' ORDER BY name DESC")
+    LiveData<List<player>> getOVERWATCHPlayers();
+
+    @Query("SELECT * FROM Tabla_Player WHERE game like '%lol%' ORDER BY name DESC")
+    LiveData<List<player>> getLOLPlayers();
+
+    @Query("SELECT * FROM Tabla_Player WHERE game like '%csgo%' ORDER BY name DESC")
+    LiveData<List<player>> getCSGOPlayers();
 
 
 }

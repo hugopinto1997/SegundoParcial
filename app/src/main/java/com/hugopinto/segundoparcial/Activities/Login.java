@@ -71,18 +71,15 @@ public class Login extends AppCompatActivity {
                                startActivity(intent);
                                finish();
                            }
-                           else {
-                               Toast.makeText(getApplicationContext(), "Sin Respuesta", Toast.LENGTH_SHORT).show();
-                           }
                        }
 
                        @Override
                        public void onFailure(Call<String> call, Throwable t) {
                            if(t instanceof SocketTimeoutException){
-                               Toast.makeText(getApplicationContext(), "false", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getApplicationContext(),"Error, no puede conectarse", Toast.LENGTH_SHORT).show();
                            }
                            else{
-                               Toast.makeText(getApplicationContext(), "si puso pero no existe", Toast.LENGTH_SHORT).show();
+                               Toast.makeText(getApplicationContext(),"Error, no puede conectarse", Toast.LENGTH_SHORT).show();
                            }
 
                        }

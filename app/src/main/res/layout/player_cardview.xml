@@ -18,7 +18,8 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
-            android:background="@drawable/side_nav_bar"
+            android:background="@drawable/animatedbg2"
+            android:id="@+id/linearimage"
             android:layout_weight="2"
             android:layout_height="match_parent">
 

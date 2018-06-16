@@ -17,6 +17,9 @@ public class NewsViewModel extends AndroidViewModel {
     private LiveData<List<News>> mlista3;
     private LiveData<List<News>> mlista4;
     private LiveData<List<player>> mlistaplayers;
+    private LiveData<List<player>> mlistaplayers2;
+    private LiveData<List<player>> mlistaplayers3;
+
 
 
 
@@ -28,7 +31,9 @@ public class NewsViewModel extends AndroidViewModel {
         mlista2 = Repo.getCSGONEWS();
         mlista3 = Repo.getLOLNEWS();
         mlista4 = Repo.getOVERWATCHNEWS();
-        mlistaplayers = Repo.getAllPlayers();
+        mlistaplayers = Repo.getCSGOPlayers();
+        mlistaplayers2 = Repo.getLOLPlayers();
+        mlistaplayers3 = Repo.getOVERWATCHPlayers();
 
 
 
@@ -46,9 +51,16 @@ public class NewsViewModel extends AndroidViewModel {
     public LiveData<List<News>> getOVERWATCHNEWS(){
         return mlista4;
     }
-    public LiveData<List<player>> getAllPlayers(){
+    public LiveData<List<player>> getLOLPlayers(){
+        return mlistaplayers2;
+    }
+    public LiveData<List<player>> getOVERWATCHPlayers(){
+        return mlistaplayers3;
+    }
+    public LiveData<List<player>> getCSGOPlayers(){
         return mlistaplayers;
     }
+
     public void fillnews(){
         Repo.FillAllNews();
     }

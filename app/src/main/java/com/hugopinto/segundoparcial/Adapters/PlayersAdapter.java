@@ -2,6 +2,7 @@ package com.hugopinto.segundoparcial.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +28,8 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
     private ArrayList<player> players;
     private Context ctx;
     private Context context;
+    private LinearLayout layout;
+    private AnimationDrawable animacion;
 
     public static class PlayersViewHolder extends RecyclerView.ViewHolder {
         CardView cardp;
@@ -58,6 +62,12 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
     @Override
     public PlayersAdapter.PlayersViewHolder onCreateViewHolder(ViewGroup parent, int ViewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.player_cardview,parent,false);
+        layout = v.findViewById(R.id.linearimage);
+        animacion = (AnimationDrawable) layout.getBackground();
+        animacion.setEnterFadeDuration(2000);
+        animacion.setExitFadeDuration(2000);
+        animacion.start();
+
         return (new PlayersAdapter.PlayersViewHolder(v));
     }
 

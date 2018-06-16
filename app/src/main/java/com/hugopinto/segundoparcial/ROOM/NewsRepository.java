@@ -3,13 +3,16 @@ package com.hugopinto.segundoparcial.ROOM;
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hugopinto.segundoparcial.APIs.GameNewsAPI;
 import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.APIs.player;
+import com.hugopinto.segundoparcial.Activities.Login;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -30,6 +33,10 @@ public class NewsRepository {
     private LiveData<List<News>> listalol;
     private LiveData<List<News>> listaoverwatch;
     private LiveData<List<player>> listaplayer;
+    private LiveData<List<player>> listaplayer2;
+    private LiveData<List<player>> listaplayer3;
+    private Application applicationc;
+
 
 
     private NewsDAO mNewsDAO;
@@ -38,6 +45,8 @@ public class NewsRepository {
     private NewsDAO mNewsDAO4;
     private PlayersDAO mPlayersDAO;
 
+    private  SharedPreferences sp;
+
 
 
 
@@ -45,11 +54,12 @@ public class NewsRepository {
     public NewsRepository(Application application){
         NewsDB database = NewsDB.getAppDataBase(application);
         mNewsDAO= database.newsDAO();
+        applicationc = application;
         mNewsDAO2= database.newsDAO();
         mNewsDAO3= database.newsDAO();
         mNewsDAO4= database.newsDAO();
         mPlayersDAO = database.playersDAO();
-        SharedPreferences sp = application.getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+        sp = application.getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
         TokenAccess = sp.getString("Token","");
         FillAllNews();
         FillAllNews2();
@@ -60,21 +70,23 @@ public class NewsRepository {
         listacsgo = mNewsDAO2.getCSGONEWS();
         listalol = mNewsDAO3.getLOLNEWS();
         listaoverwatch = mNewsDAO4.getOVERWATCHNEWS();
-        listaplayer = mPlayersDAO.getAllPlayers();
+        listaplayer = mPlayersDAO.getCSGOPlayers();
+        listaplayer2 = mPlayersDAO.getLOLPlayers();
+        listaplayer3 = mPlayersDAO.getOVERWATCHPlayers();
 
 
     }
     public void FillAllNews(){
-        new FNews(TokenAccess,mNewsDAO).execute();
+        new FNews(TokenAccess,mNewsDAO, applicationc).execute();
     }
     public void FillAllNews2(){
-        new FNews(TokenAccess,mNewsDAO2).execute();
+        new FNews(TokenAccess,mNewsDAO2, applicationc).execute();
     }
     public void FillAllNews3(){
-        new FNews(TokenAccess,mNewsDAO3).execute();
+        new FNews(TokenAccess,mNewsDAO3, applicationc).execute();
     }
     public void FillAllNews4(){
-        new FNews(TokenAccess,mNewsDAO4).execute();
+        new FNews(TokenAccess,mNewsDAO4, applicationc).execute();
     }
     public void FillAllPlayers(){
         new FPlayers(TokenAccess,mPlayersDAO).execute();
@@ -94,9 +106,16 @@ public class NewsRepository {
     public LiveData<List<News>> getOVERWATCHNEWS(){
         return listaoverwatch;
     }
-    public LiveData<List<player>> getAllPlayers(){
+    public LiveData<List<player>> getLOLPlayers(){
+        return listaplayer2;
+    }
+    public LiveData<List<player>> getCSGOPlayers(){
         return listaplayer;
     }
+    public LiveData<List<player>> getOVERWATCHPlayers(){
+        return listaplayer3;
+    }
+
 
 
     private static class AsyncTaskI extends AsyncTask<ArrayList<News>,Void,Void>{
@@ -124,10 +143,13 @@ public class NewsRepository {
 
         private String TokAcces;
         private NewsDAO mnDAO;
+        private Application a;
+        private SharedPreferences shared;
 
-        public FNews(String token,NewsDAO nwsDAO){
+        public FNews(String token,NewsDAO nwsDAO,Application application){
             this.TokAcces= token;
             this.mnDAO= nwsDAO;
+            this.a = application;
         }
 
 
@@ -143,15 +165,19 @@ public class NewsRepository {
                 public void onResponse(Call<ArrayList<News>> call, Response<ArrayList<News>> response) {
                     if(response.isSuccessful()){
                         ArrayList<News> newarray = (ArrayList<News>) response.body();
-                        Collections.reverse(newarray);
                         new AsyncTaskI(mnDAO).execute(newarray);
-
+                    }else {
+                        shared= a.getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+                        shared.edit().clear().apply();
+                        Intent intent = new Intent(a,Login.class);
+                        intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Toast.makeText(a, response.code()+""+"Sesion expirada", Toast.LENGTH_SHORT).show();
+                        a.startActivity(intent);
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<News>> call, Throwable t) {
-                    System.out.println("on failure");
                 }
             });
             return null;
@@ -182,6 +208,7 @@ public class NewsRepository {
 
         private String TokAcces;
         private PlayersDAO plysDAO;
+        private static Application contexto;
 
         public FPlayers(String token,PlayersDAO psDAO){
             this.TokAcces= token;
@@ -201,7 +228,6 @@ public class NewsRepository {
                 public void onResponse(Call<ArrayList<player>> call, Response<ArrayList<player>> response) {
                     if(response.isSuccessful()){
                         ArrayList<player> newarray = (ArrayList<player>) response.body();
-                        Collections.reverse(newarray);
                         new AsyncTaskI2(plysDAO).execute(newarray);
 
                     }
