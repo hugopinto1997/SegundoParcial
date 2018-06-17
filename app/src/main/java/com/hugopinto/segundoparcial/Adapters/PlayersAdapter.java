@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.APIs.player;
 import com.hugopinto.segundoparcial.Activities.NewsFullView;
+import com.hugopinto.segundoparcial.Activities.PlayerFullView;
 import com.hugopinto.segundoparcial.R;
 import com.squareup.picasso.Picasso;
 
@@ -86,6 +87,11 @@ public class PlayersAdapter extends RecyclerView.Adapter<PlayersAdapter.PlayersV
             @Override
             public void onClick(View v) {
                 Toast.makeText(v.getContext(),players.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Intent newIntent = new Intent(v.getContext(), PlayerFullView.class);
+                Bundle caja = new Bundle();
+                caja.putSerializable("key2", jugador);
+                newIntent.putExtras(caja);
+                v.getContext().startActivity(newIntent);
             }
         });
     }

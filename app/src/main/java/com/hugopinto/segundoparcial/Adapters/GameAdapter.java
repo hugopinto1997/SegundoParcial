@@ -6,6 +6,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +44,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
         CardView card;
         TextView title,description;
         ImageView img;
+        LinearLayout layout;
         Context ctx;
 
 
@@ -53,6 +55,7 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
             title=itemView.findViewById(R.id.newstitle);
             description=itemView.findViewById(R.id.newsdesc);
             img=itemView.findViewById(R.id.img);
+            layout = itemView.findViewById(R.id.linclick);
             ctx= itemView.getContext();
 
 
@@ -92,6 +95,16 @@ public class GameAdapter extends RecyclerView.Adapter<GameAdapter.GamesViewHolde
             Picasso.with(holder.ctx).load(R.drawable.ic_gamepad).error(R.drawable.ic_gamepad).into(holder.img);
         }
         holder.img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(v.getContext(), NewsFullView.class);
+                Bundle caja = new Bundle();
+                caja.putSerializable("key", noticia);
+                newIntent.putExtras(caja);
+                v.getContext().startActivity(newIntent);
+            }
+        });
+        holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(v.getContext(), NewsFullView.class);

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:background="@drawable/nnavdrawbg"
+    tools:context=".Activities.NewsFullView"
+    tools:showIn="@layout/activity_player_full_view">
+
+    <LinearLayout
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/playername"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:background="@drawable/animatedbg2"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#fff"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+
+        <LinearLayout
+        android:layout_marginTop="4dp"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/Biografia"
+            android:fontFamily="sans-serif-condensed"
+            android:textColor="#fff"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textAlignment="center"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:id="@+id/playerbio"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:textColor="#fff"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"/>
+
+    </LinearLayout>
+
+
+
+</LinearLayout>
+
+
+
+
+
+
+</android.support.v4.widget.NestedScrollView>

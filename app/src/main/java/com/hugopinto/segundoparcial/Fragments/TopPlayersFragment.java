@@ -5,8 +5,10 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -38,6 +40,7 @@ public class TopPlayersFragment extends Fragment {
     public PlayersAdapter adapter;
     public LinearLayoutManager lManager;
     public Context contexto;
+    SwipeRefreshLayout swipeRefreshLayout;
     public NewsViewModel nvmodel;
 
 
@@ -93,6 +96,26 @@ public class TopPlayersFragment extends Fragment {
         View view =inflater.inflate(R.layout.fragment_top_players, container, false);
 
         rv = view.findViewById(R.id.recyclertop);
+
+        swipeRefreshLayout= view.findViewById(R.id.swipeplayer);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            nvmodel= new NewsViewModel(getActivity().getApplication());
+                            swipeRefreshLayout.setRefreshing(false);
+                        } catch (Exception e) {
+                        }
+                    }
+                }, 1000);
+            }
+        });
+
+
         nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
         nvmodel.getPlayers().observe(this, new Observer<List<player>>() {
                @Override

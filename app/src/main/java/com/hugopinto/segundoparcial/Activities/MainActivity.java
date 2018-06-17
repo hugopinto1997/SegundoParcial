@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,18 +47,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
-            setContentView(R.layout.activity_main);
-            SharedPreferences sharedPreferences = this.getSharedPreferences("Juego", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("Juegos","Noticias");
-            editor.apply();
 
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportFragmentManager().beginTransaction().replace(R.id.contenido, NewsFragment.newInstance("Noticias")).commit();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,7 +68,15 @@ public class MainActivity extends AppCompatActivity
 
 
         getSupportFragmentManager().beginTransaction().replace(R.id.incluido, new JuegosFragment()).commit();
+        if(validacion){
+            getSupportFragmentManager().beginTransaction().replace(R.id.contenido, NewsFragment.newInstance("Noticias")).commit();
+            SharedPreferences sharedPreferences = this.getSharedPreferences("Juego", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("Juegos","Noticias");
+            editor.apply();
 
+            validacion=false;
+        }
 
 
 

@@ -3,11 +3,14 @@ package com.hugopinto.segundoparcial.Fragments;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -42,6 +45,7 @@ public class ImagesFragment extends Fragment {
     public GridLayoutManager gManager;
     public Context contexto;
     public NewsViewModel nvmodel;
+    public SwipeRefreshLayout swipeRefreshLayout;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -90,6 +94,25 @@ public class ImagesFragment extends Fragment {
         // Inflate the layout for this fragment
         final View view = inflater.inflate(R.layout.fragment_images, container, false);
         rv = view.findViewById(R.id.recyclerimg);
+        swipeRefreshLayout= view.findViewById(R.id.swipeimage);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            nvmodel= new NewsViewModel(getActivity().getApplication());
+                            swipeRefreshLayout.setRefreshing(false);
+                        } catch (Exception e) {
+                        }
+                    }
+                }, 1000);
+            }
+        });
+
+
            nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);
            nvmodel.getNewsByCat().observe(this, new Observer<List<News>>() {
                @Override

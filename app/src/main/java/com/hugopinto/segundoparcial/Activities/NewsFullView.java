@@ -23,6 +23,7 @@ public class NewsFullView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_full_view);
+        getSupportActionBar().hide();
 
            imagenfull = findViewById(R.id.imagefullview);
             Newsname = findViewById(R.id.titlenews);
@@ -46,6 +47,17 @@ public class NewsFullView extends AppCompatActivity {
         gname.setText(rnews.getGame());
         bnews.setText(rnews.getBody());
         datenews.setText(rnews.getCreated_date());
+
+        imagenfull.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(v.getContext(), imageact.class);
+                Bundle caja = new Bundle();
+                caja.putSerializable("key3", rnews);
+                newIntent.putExtras(caja);
+                v.getContext().startActivity(newIntent);
+            }
+        });
 
 
     }

@@ -66,7 +66,7 @@ public class NewsRepository {
         new FNews(TokenAccess,mNewsDAO, applicationc).execute();
     }
     public void FillAllPlayers(){
-        new FPlayers(TokenAccess,mPlayersDAO).execute();
+        new FPlayers(TokenAccess,mPlayersDAO, applicationc).execute();
     }
 
 
@@ -137,6 +137,7 @@ public class NewsRepository {
                     }else {
                         shared= a.getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
                         shared.edit().clear().apply();
+                        Toast.makeText(a,response.code()+"", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(a,Login.class);
                         intent.setFlags(intent.FLAG_ACTIVITY_NEW_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
                         Toast.makeText(a, response.code()+""+"Sesion expirada", Toast.LENGTH_SHORT).show();
@@ -146,6 +147,7 @@ public class NewsRepository {
 
                 @Override
                 public void onFailure(Call<ArrayList<News>> call, Throwable t) {
+                    Toast.makeText(a,"No hay conexion a internet",Toast.LENGTH_SHORT).show();
                 }
             });
             return null;
@@ -178,9 +180,10 @@ public class NewsRepository {
         private PlayersDAO plysDAO;
         private static Application contexto;
 
-        public FPlayers(String token,PlayersDAO psDAO){
+        public FPlayers(String token,PlayersDAO psDAO, Application contexto){
             this.TokAcces= token;
             this.plysDAO= psDAO;
+            this.contexto=contexto;
         }
 
 
@@ -198,12 +201,16 @@ public class NewsRepository {
                         ArrayList<player> newarray = (ArrayList<player>) response.body();
                         new AsyncTaskI2(plysDAO).execute(newarray);
 
+                    }else {
+                        Toast.makeText(contexto,response.code()+"", Toast.LENGTH_SHORT).show();
+
                     }
                 }
 
                 @Override
                 public void onFailure(Call<ArrayList<player>> call, Throwable t) {
-                    System.out.println("on failure");
+                    Toast.makeText(contexto,"No hay conexion a internet",Toast.LENGTH_SHORT).show();
+
                 }
             });
             return null;

@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.APIs.player;
 import com.hugopinto.segundoparcial.Activities.NewsFullView;
+import com.hugopinto.segundoparcial.Activities.imageact;
 import com.hugopinto.segundoparcial.R;
 import com.squareup.picasso.Picasso;
 
@@ -66,6 +67,16 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImagesView
         } else {
             Picasso.with(holder.ctx).load(R.drawable.ic_gamepad).error(R.drawable.ic_gamepad).into(holder.img);
         }
+        holder.card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(v.getContext(), imageact.class);
+                Bundle caja = new Bundle();
+                caja.putSerializable("key3", noticia);
+                newIntent.putExtras(caja);
+                v.getContext().startActivity(newIntent);
+            }
+        });
     }
 
 

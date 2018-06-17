@@ -7,8 +7,10 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.widget.LinearLayout;
+import android.widget.Toolbar;
 
 import com.hugopinto.segundoparcial.APIs.News;
 import com.hugopinto.segundoparcial.APIs.player;
@@ -40,6 +43,7 @@ public class NewsFragment extends Fragment {
     public RecyclerView rv;
     public GameAdapter adapter;
     public GridLayoutManager gManager;
+    SwipeRefreshLayout swipeRefreshLayout;
     public Context contexto;
     public NewsViewModel nvmodel;
     private String juego;
@@ -98,6 +102,24 @@ public class NewsFragment extends Fragment {
         SharedPreferences sharedPref = getContext().getSharedPreferences("Juego",Context.MODE_PRIVATE);
         juego = sharedPref.getString("Juegos","");
         rv = view.findViewById(R.id.recyclernews);
+
+        swipeRefreshLayout= view.findViewById(R.id.swipeews);
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            nvmodel= new NewsViewModel(getActivity().getApplication());
+                            swipeRefreshLayout.setRefreshing(false);
+                        } catch (Exception e) {
+                        }
+                    }
+                }, 1000);
+            }
+        });
 
         if (juego.contains("Noticias")) {
             nvmodel = ViewModelProviders.of(this).get(NewsViewModel.class);

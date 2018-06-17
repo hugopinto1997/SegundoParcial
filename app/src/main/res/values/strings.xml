@@ -209,4 +209,6 @@
     <string name="fechas">DD/MM/YYYY</string>
     <string name="games">Game Name</string>
     <string name="topname">Player name</string>
+    <string name="Biografia">Biografía</string>
+    <string name="Usuarioregistrado">Usuario de Games News API</string>
 </resources>

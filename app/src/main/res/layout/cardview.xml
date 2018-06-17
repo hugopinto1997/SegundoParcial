@@ -27,6 +27,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:orientation="vertical"
+            android:id="@+id/linclick"
             android:layout_weight="5"
             android:layout_height="match_parent">
             <TextView
